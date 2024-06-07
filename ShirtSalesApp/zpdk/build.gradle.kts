@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.shirtsalesapp"
+    namespace = "com.example.zpdk"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.shirtsalesapp"
-        minSdk = 24
+        applicationId = "com.example.zpdk"
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -40,11 +40,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    // zaloPay
-    implementation("com.squareup.okhttp3:okhttp:4.6.0")
-    implementation("commons-codec:commons-codec:1.14")
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
-    implementation(files("libs/zpdk-release-v3.1.aar"))
-
 }
