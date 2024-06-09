@@ -1,0 +1,33 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+id btnCreateOrder
+id btnPay
+id lblSoTien
+id lblZpTransToken
+id main
+id txtAmount
+id txtDebug
+id txtResult
+id txtTitle
+id txtToken
+layout activity_main
+layout activity_zalo_pay_method
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string btn_create_order
+string btn_pay
+string lbl_donhang
+string lbl_sotien
+string lbl_zptranstoken
+string to_webview
+string txt_amount_hint
+string txt_amount_init
+style Base.Theme.ShirtSalesApp
+style Theme.ShirtSalesApp
+xml backup_rules
+xml data_extraction_rules
