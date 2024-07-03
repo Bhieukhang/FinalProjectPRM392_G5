@@ -19,9 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
 import com.example.shirtsalesapp.model.Product;
+import com.example.shirtsalesapp.model.response.ProductResponse;
+import com.example.shirtsalesapp.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -69,19 +75,41 @@ public class ProductListActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        String img = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lg9k79viu86v8c_tn";
+
+        loadProducts();
+//        String img = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lg9k79viu86v8c_tn";
         // Dummy data
-        productList = new ArrayList<>();
-        productList.add(new Product("GodMother", 100.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
+//        productList = new ArrayList<>();
+//        productList.add(new Product("GodMother", 100.0, img));
+//        productList.add(new Product("GodMother", 200.0, img));
+//        productList.add(new Product("GodMother", 200.0, img));
+//        productList.add(new Product("GodMother", 200.0, img));
+//        productList.add(new Product("GodMother", 200.0, img));
+//        productList.add(new Product("GodMother", 200.0, img));
         // Add more products
 
-        productAdapter = new ProductAdapter(productList);
-        recyclerView.setAdapter(productAdapter);
+//        productAdapter = new ProductAdapter(this, productList);
+//        recyclerView.setAdapter(productAdapter);
+    }
+
+    private void loadProducts() {
+        ProductService.getApi().getProductList().enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    productList = response.body().getProducts();
+                    productAdapter = new ProductAdapter(ProductListActivity.this, productList);
+                    recyclerView.setAdapter(productAdapter);
+                } else {
+                    Toast.makeText(ProductListActivity.this, "Failed to load products", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                Toast.makeText(ProductListActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void performSearch(String query) {

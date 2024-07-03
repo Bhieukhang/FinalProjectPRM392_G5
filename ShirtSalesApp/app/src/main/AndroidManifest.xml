@@ -17,11 +17,6 @@
         android:theme="@style/Theme.ShirtSalesApp"
         tools:targetApi="31">
         <activity
-            android:name=".activity.product.ChooseProductActivity"
-            android:exported="false" >
-
-        </activity>
-        <activity
             android:name=".activity.product.ProductListActivity"
             android:exported="true" >
             <intent-filter>
