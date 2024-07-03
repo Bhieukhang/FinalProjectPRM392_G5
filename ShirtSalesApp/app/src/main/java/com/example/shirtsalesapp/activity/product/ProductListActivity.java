@@ -1,8 +1,8 @@
 package com.example.shirtsalesapp.activity.product;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -14,14 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
 import com.example.shirtsalesapp.model.Product;
+import com.example.shirtsalesapp.apiservice.ApiService;
+import com.example.shirtsalesapp.model.RetrofitClient;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -33,6 +38,7 @@ public class ProductListActivity extends AppCompatActivity {
     private LinearLayout searchContainer;
     private View outsideView;
     private ImageView iconFilter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,19 +75,29 @@ public class ProductListActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        String img = "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lg9k79viu86v8c_tn";
-        // Dummy data
-        productList = new ArrayList<>();
-        productList.add(new Product("GodMother", 100.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        productList.add(new Product("GodMother", 200.0, img));
-        // Add more products
 
-        productAdapter = new ProductAdapter(productList);
-        recyclerView.setAdapter(productAdapter);
+        // Cấu hình Retrofit
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+        ApiService apiService = retrofit.create(ApiService.class);
+
+        Call<List<Product>> call = apiService.getAllProducts();
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    productList = response.body();
+                    productAdapter = new ProductAdapter(productList);
+                    recyclerView.setAdapter(productAdapter);
+                } else {
+                    Log.e("API_ERROR", "Response Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Log.e("API_ERROR", t.getMessage());
+            }
+        });
     }
 
     private void performSearch(String query) {
