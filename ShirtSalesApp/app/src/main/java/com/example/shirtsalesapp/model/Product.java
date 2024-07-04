@@ -2,103 +2,102 @@ package com.example.shirtsalesapp.model;
 
 public class Product {
 
-    public int Id;
-    public String Title;
-    public String ProductName;
-    public String Description;
-    public double Price;
-    public int Quantity;
-    public int Status;
-    public int CategoryId;
-    public String ImageUrl;
+    private int id;
+    private String title;
+    private String productName;
+    private String description;
+    private double price;
+    private int quantity;
+    private int status;
+    private int categoryId;
+    private String imageUrl;
 
-    public Product(String name, double price, String imageUrl) {
-        ProductName = name;
-        Price = price;
-        ImageUrl = imageUrl;
+    public Product() {
+        // Default constructor
     }
 
     public Product(int id, String title, String productName, String description, double price, int quantity, int status, int categoryId, String imageUrl) {
-        Id = id;
-        Title = title;
-        ProductName = productName;
-        Description = description;
-        Price = price;
-        Quantity = quantity;
-        Status = status;
-        CategoryId = categoryId;
-        ImageUrl = imageUrl;
+        this.id = id;
+        this.title = title;
+        this.productName = productName;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.status = status;
+        this.categoryId = categoryId;
+        this.imageUrl = imageUrl;
     }
 
+    // Getters and setters for all fields
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getProductName() {
-        return ProductName;
+        return productName;
     }
 
     public void setProductName(String productName) {
-        ProductName = productName;
+        this.productName = productName;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public double getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(double price) {
-        Price = price;
+        this.price = price;
     }
 
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
     public void setQuantity(int quantity) {
-        Quantity = quantity;
+        this.quantity = quantity;
     }
 
     public int getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(int status) {
-        Status = status;
+        this.status = status;
     }
 
     public int getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
     public void setCategoryId(int categoryId) {
-        CategoryId = categoryId;
+        this.categoryId = categoryId;
     }
 
     public String getImageUrl() {
-        return ImageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        ImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
     }
 }
