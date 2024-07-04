@@ -17,8 +17,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.Product;
-import com.example.shirtsalesapp.apiservice.ApiService;
+import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.RetrofitClient;
 
 import java.util.List;
@@ -78,7 +79,7 @@ public class ProductListActivity extends AppCompatActivity {
 
         // Cấu hình Retrofit
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
-        ApiService apiService = retrofit.create(ApiService.class);
+        ProductAPI apiService = retrofit.create(ProductAPI.class);
 
         Call<List<Product>> call = apiService.getAllProducts();
         call.enqueue(new Callback<List<Product>>() {

@@ -9,7 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface ProductAPI {
-    @GET("/api/Product/GetAllProducts")
-    Call<List<Product>> getProductList();
+    @GET("api/Product/GetAllProducts")
+    Call<List<Product>> getAllProducts();
 }
 
