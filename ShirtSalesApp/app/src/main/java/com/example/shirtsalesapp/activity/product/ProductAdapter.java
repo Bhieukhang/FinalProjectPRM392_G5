@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
 import com.example.shirtsalesapp.model.Product;
-import com.example.shirtsalesapp.activity.product.ProductListActivity;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private List<Product> productList;
     private Context context;
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    public ProductAdapter(List<Product> productList) {
         this.context = context;
         this.productList = productList;
     }
