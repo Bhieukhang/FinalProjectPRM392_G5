@@ -10,7 +10,9 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/img_background" />
 
     <TextView
         android:id="@+id/textView"
@@ -18,7 +20,7 @@
         android:layout_height="47dp"
         android:layout_below="@+id/imageView"
         android:layout_marginTop="-1dp"
-        android:text="Chào quản lí,"
+        android:text="Hello manager,"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -33,40 +35,29 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sản phẩm"
+            android:text="Product"
             android:textStyle="italic" />
 
     </RelativeLayout>
 
     <EditText
         android:id="@+id/editTextAmountProduct"
-        android:layout_width="136dp"
-        android:layout_height="wrap_content"
+        android:layout_width="107dp"
+        android:layout_height="34dp"
+        android:hint=""
         android:layout_below="@+id/relativeLayout"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/editTextAmountInStore"
-        android:layout_width="127dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="42dp"
-        android:layout_toEndOf="@+id/editTextAmountProduct"
-        android:ems="10"
-        android:inputType="number" />
+        android:inputType="number"
+        android:background="@null" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/rvListProduct"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@id/editTextAmountInStore"
+        android:layout_below="@id/editTextAmountProduct"
         android:layout_above="@id/bottomNavigationView"
         android:padding="8dp"
         android:paddingStart="16dp"
@@ -80,5 +71,13 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/navigation_bar_manager">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="66dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="10dp"
+        android:text="In store " />
 
 </RelativeLayout>

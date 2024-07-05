@@ -87,7 +87,7 @@ public class ProductListActivity extends AppCompatActivity {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     productList = response.body();
-                    productAdapter = new ProductAdapter(productList);
+                    productAdapter = new ProductAdapter(productList, 1);
                     recyclerView.setAdapter(productAdapter);
                 } else {
                     Log.e("API_ERROR", "Response Code: " + response.code());
