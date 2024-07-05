@@ -42,34 +42,31 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == 1) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.activity_card_item_product, parent, false);
+            return new ProductViewHolder(view);
         } else if (viewType == 2) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_product, parent, false);
+            return new ProductItemViewHolder(view);
         } else {
-            // Handle unexpected viewType gracefully by inflating a default layout
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_product, parent, false);
+                    .inflate(R.layout.activity_card_item_product, parent, false);
+            return new ProductViewHolder(view);
         }
-        return new ItemViewHolder(view);
     }
 
-    @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Product product = productList.get(position);
         if (holder instanceof ProductViewHolder) {
             ((ProductViewHolder) holder).bind(product);
-        } else {
-            ((ItemViewHolder) holder).bind(product);
+        } else if (holder instanceof ProductItemViewHolder) {
+            ((ProductItemViewHolder) holder).bind(product);
         }
     }
-
-
-
     @Override
     public int getItemCount() {
         return productList.size();
@@ -98,13 +95,13 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     //Activity Manager Product
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
+    static class ProductItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView productName;
         TextView productPrice;
         ImageView productImage;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        public ProductItemViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.textProductName);
             productPrice = itemView.findViewById(R.id.textPrice);
