@@ -1,4 +1,4 @@
-package com.example.shirtsalesapp.auth;
+package com.example.shirtsalesapp.activity.auth;
 
 import com.example.shirtsalesapp.model.User;
 

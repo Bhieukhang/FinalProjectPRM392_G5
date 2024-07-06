@@ -1,9 +1,8 @@
-package com.example.shirtsalesapp.auth;
+package com.example.shirtsalesapp.activity.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;

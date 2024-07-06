@@ -1,4 +1,4 @@
-package com.example.shirtsalesapp.auth;
+package com.example.shirtsalesapp.activity.auth;
 
 public class RegisterRequest {
     private String UserName;

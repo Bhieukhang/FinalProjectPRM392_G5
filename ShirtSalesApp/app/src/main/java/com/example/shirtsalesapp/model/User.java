@@ -12,6 +12,11 @@ public class User {
     private Integer status;
     private Integer roleId;
 
+    public User(String userName, Integer status) {
+        this.userName = userName;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

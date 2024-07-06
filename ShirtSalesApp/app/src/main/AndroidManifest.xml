@@ -17,29 +17,33 @@
         android:theme="@style/Theme.ShirtSalesApp"
         tools:targetApi="31">
         <activity
-            android:name=".auth.LoginActivity"
-            android:exported="true" >
+            android:name=".activity.manager.account.AccountActiveActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".activity.manager.ManagePaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.manager.ManageAccountActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".activity.auth.LoginActivity"
+            android:exported="false"></activity>
         <activity
             android:name=".activity.manager.ManageProductActivity"
-            android:exported="false" >
-        </activity>
-
+            android:exported="false" />
         <activity
-            android:name=".auth.RegisterActivity"
-            android:exported="true" >
-        </activity>
-
+            android:name=".activity.auth.RegisterActivity"
+            android:exported="true" />
         <activity
             android:name=".activity.product.ProductListActivity"
-            android:exported="false" >
-        </activity>
-
+            android:exported="false" />
         <activity
             android:name=".ZaloPayMethodActivity"
             android:exported="false"
