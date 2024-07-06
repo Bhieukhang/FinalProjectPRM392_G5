@@ -2,12 +2,15 @@ package com.example.shirtsalesapp.activity.manager;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
@@ -17,6 +20,7 @@ import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.Product;
 import com.example.shirtsalesapp.model.RetrofitClient;
 import com.example.shirtsalesapp.service.ProductService;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -36,6 +40,9 @@ public class ManageProductActivity extends AppCompatActivity {
 
         editTextAmountProduct = findViewById(R.id.editTextAmountProduct);
         rvListProduct = findViewById(R.id.rvListProduct);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        setupBottomNavigation(bottomNavigationView);
 
         Retrofit retrofit = RetrofitClient.getRetrofitInstance();
         ProductAPI apiService = retrofit.create(ProductAPI.class);
@@ -75,6 +82,31 @@ public class ManageProductActivity extends AppCompatActivity {
                 Log.e("API_ERROR", errorMessage);
             }
         });
+    }
 
+    private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                Log.e("MenuManage", "Activity");
+
+                if (id == R.id.product) {
+                    startActivity(new Intent(ManageProductActivity.this, ManageProductActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.account) {
+                    startActivity(new Intent(ManageProductActivity.this, ManageAccountActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.payment) {
+                    startActivity(new Intent(ManageProductActivity.this, ManagePaymentActivity.class));
+                    finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
     }
 }

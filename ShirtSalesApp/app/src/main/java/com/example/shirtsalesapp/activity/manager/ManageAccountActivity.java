@@ -2,18 +2,23 @@ package com.example.shirtsalesapp.activity.manager;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.shirtsalesapp.R;
-import com.example.shirtsalesapp.activity.manager.account.AccountActiveActivity;
+import com.example.shirtsalesapp.activity.manager.account.AccountActiveFragment;
+import com.example.shirtsalesapp.activity.manager.account.AccountActivity;
+import com.example.shirtsalesapp.activity.manager.account.AccountInactiveFragment;
 import com.example.shirtsalesapp.api.AccountAPI;
 import com.example.shirtsalesapp.model.RetrofitClient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,11 +37,12 @@ public class ManageAccountActivity extends AppCompatActivity {
 
         linkActive = findViewById(R.id.link_active);
         linkInactive = findViewById(R.id.link_inactive);
-
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        setupBottomNavigation(bottomNavigationView);
         linkActive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ManageAccountActivity.this, AccountActiveActivity.class);
+                Intent intent = new Intent(ManageAccountActivity.this, AccountActivity.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +50,7 @@ public class ManageAccountActivity extends AppCompatActivity {
         linkInactive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ManageAccountActivity.this, AccountActiveActivity.class);
+                Intent intent = new Intent(ManageAccountActivity.this, AccountActivity.class);
                 startActivity(intent);
             }
         });
@@ -110,6 +116,32 @@ public class ManageAccountActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
                 Log.e(TAG, "Network request failed", t);
+            }
+        });
+    }
+
+    private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                Log.e("MenuManage", "Activity");
+
+                if (id == R.id.product) {
+                    startActivity(new Intent(ManageAccountActivity.this, ManageProductActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.account) {
+                    startActivity(new Intent(ManageAccountActivity.this, ManageAccountActivity.class));
+                    finish();
+                    return true;
+                } else if (id == R.id.payment) {
+                    startActivity(new Intent(ManageAccountActivity.this, ManagePaymentActivity.class));
+                    finish();
+                    return true;
+                } else {
+                    return false;
+                }
             }
         });
     }

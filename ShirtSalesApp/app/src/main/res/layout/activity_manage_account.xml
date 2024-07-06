@@ -27,8 +27,8 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-
     <RelativeLayout
+        android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
@@ -180,5 +180,16 @@
 
 
     </RelativeLayout>
+
+    <!-- Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3"
+        app:menu="@menu/navigation_bar_manager"
+        tools:layout_editor_absoluteX="-16dp">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

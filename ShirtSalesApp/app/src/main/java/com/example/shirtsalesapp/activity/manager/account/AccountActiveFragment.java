@@ -1,10 +1,15 @@
 package com.example.shirtsalesapp.activity.manager.account;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.shirtsalesapp.R;
 import com.example.shirtsalesapp.api.AccountAPI;
@@ -19,21 +24,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class AccountActiveActivity extends AppCompatActivity {
+public class AccountActiveFragment extends Fragment {
     private ListView listView;
     private AccountAdapter adapter;
     private List<User> userList;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_active);
 
-        listView = findViewById(R.id.listViewAccountActive);
+    public AccountActiveFragment() {}
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_account_active,
+                container, false);
+        Log.e("AccountActiveFragment", "view: " + view);
+        listView = view.findViewById(R.id.listViewAccountActive);
         userList = new ArrayList<>();
-        adapter = new AccountAdapter(this, userList);
+        adapter = new AccountAdapter(requireContext(), userList);
         listView.setAdapter(adapter);
 
         fetchDataFromApi();
+
+        return view;
     }
 
     private void fetchDataFromApi() {
@@ -53,16 +65,18 @@ public class AccountActiveActivity extends AppCompatActivity {
                                 userList.add(user);
                             }
                         }
+                        Log.e("AccountActive", "List user: " + userList);
+
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    Log.e("AccountActive", "Request failed: " + response.message());
+                    Log.e("AccountActiveFragment", "Request failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.e("AccountActive", "Network request failed", t);
+                Log.e("AccountActiveFragment", "Network request failed", t);
             }
         });
     }

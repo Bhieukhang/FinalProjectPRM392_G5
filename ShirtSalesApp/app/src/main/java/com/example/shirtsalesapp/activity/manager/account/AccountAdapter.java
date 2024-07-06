@@ -42,3 +42,4 @@ public class AccountAdapter extends ArrayAdapter<User> {
         return listItemView;
     }
 }
+
