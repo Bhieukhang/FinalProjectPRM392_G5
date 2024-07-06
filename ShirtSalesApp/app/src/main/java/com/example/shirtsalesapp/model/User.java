@@ -9,13 +9,13 @@ public class User {
     private String password;
     private String address;
     private String avatar;
-    private Integer status;
-    private Integer roleId;
+    private int status;
+    private int roleId;
 
-    public User(String userName, Integer status) {
-        this.userName = userName;
-        this.status = status;
-    }
+//    public User(String userName, int status) {
+//        this.userName = userName;
+//        this.status = status;
+//    }
 
     public int getId() {
         return id;
