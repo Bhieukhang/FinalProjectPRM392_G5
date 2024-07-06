@@ -1,8 +1,10 @@
 package com.example.shirtsalesapp.activity.product;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.shirtsalesapp.R;
 import com.example.shirtsalesapp.model.Product;
+import com.example.shirtsalesapp.activity.product.ProducDetailActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -63,6 +67,16 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         Product product = productList.get(position);
         if (holder instanceof ProductViewHolder) {
             ((ProductViewHolder) holder).bind(product);
+            // Add On click
+            ((ProductViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),ProducDetailActivity.class);
+
+                    intent.putExtra("productItem", product);
+                    v.getContext().startActivity(intent);
+                }
+            });
         } else if (holder instanceof ProductItemViewHolder) {
             ((ProductItemViewHolder) holder).bind(product);
         }
