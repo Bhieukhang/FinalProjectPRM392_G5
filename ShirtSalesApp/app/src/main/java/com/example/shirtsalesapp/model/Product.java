@@ -1,6 +1,7 @@
 package com.example.shirtsalesapp.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Product implements Serializable {
 
@@ -13,12 +14,12 @@ public class Product implements Serializable {
     private int status;
     private int categoryId;
     private String imageUrl;
-
+    private List<CartProduct> cartProduct;
     public Product() {
         // Default constructor
     }
 
-    public Product(int id, String title, String productName, String description, double price, int quantity, int status, int categoryId, String imageUrl) {
+    public Product(int id, String title, String productName, String description, double price, int quantity, int status, int categoryId, String imageUrl, List<CartProduct> cartProduct) {
         this.id = id;
         this.title = title;
         this.productName = productName;
@@ -28,6 +29,7 @@ public class Product implements Serializable {
         this.status = status;
         this.categoryId = categoryId;
         this.imageUrl = imageUrl;
+        this.cartProduct = cartProduct;
     }
 
     // Getters and setters for all fields
@@ -101,5 +103,13 @@ public class Product implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public List<CartProduct> getCartProduct() {
+        return cartProduct;
+    }
+
+    public void setCartProduct(List<CartProduct> cartProduct) {
+        this.cartProduct = cartProduct;
     }
 }

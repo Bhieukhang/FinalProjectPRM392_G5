@@ -7,6 +7,7 @@
     tools:context=".activity.product.ProductListActivity">
 
     <!-- Title and Search Button -->
+
     <RelativeLayout
         android:id="@+id/title_container"
         android:layout_width="match_parent"
@@ -30,6 +31,8 @@
             android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_search"
             android:contentDescription="Search" />
+
+
     </RelativeLayout>
 
     <!-- Search Container -->
@@ -60,6 +63,7 @@
             android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_search"
             android:contentDescription="Search" />
+
     </LinearLayout>
 
     <!-- New Collection and Filter Icon -->
@@ -83,7 +87,17 @@
             android:src="@drawable/ic_filter_foreground"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="50dp"/>
+        <ImageButton
+            android:id="@+id/icon_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_cart"
+            android:backgroundTint="@color/cardview_light_background">
+
+        </ImageButton>
     </RelativeLayout>
 
     <!-- Recycler View -->

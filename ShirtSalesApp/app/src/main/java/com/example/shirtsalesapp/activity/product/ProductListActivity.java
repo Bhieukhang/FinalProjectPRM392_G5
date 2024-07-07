@@ -1,5 +1,6 @@
 package com.example.shirtsalesapp.activity.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.activity.cart.CartActivity;
 import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.Product;
 import com.example.shirtsalesapp.api.ProductAPI;
@@ -38,7 +40,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ImageButton btnSearch, btnSearchInside;
     private LinearLayout searchContainer;
     private View outsideView;
-    private ImageView iconFilter;
+    private ImageView iconFilter, iconCart;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class ProductListActivity extends AppCompatActivity {
         btnSearchInside = findViewById(R.id.btn_search_inside);
         searchContainer = findViewById(R.id.search_container);
         iconFilter = findViewById(R.id.iconFilter);
+        iconCart = findViewById(R.id.icon_cart);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +76,13 @@ public class ProductListActivity extends AppCompatActivity {
                 dialogFragment.show(fragmentManager, "dialog_choose_product");
             }
         });
-
+        iconCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductListActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -87,7 +96,7 @@ public class ProductListActivity extends AppCompatActivity {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     productList = response.body();
-                    productAdapter = new ProductAdapter(productList, 1);
+                    productAdapter = new ProductAdapter(ProductListActivity.this,productList, 1);
                     recyclerView.setAdapter(productAdapter);
                 } else {
                     Log.e("API_ERROR", "Response Code: " + response.code());

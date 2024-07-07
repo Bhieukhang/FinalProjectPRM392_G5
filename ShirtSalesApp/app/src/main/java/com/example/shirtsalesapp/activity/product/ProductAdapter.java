@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +25,9 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.activity.cart.CartManager;
+import com.example.shirtsalesapp.model.Cart;
+import com.example.shirtsalesapp.model.CartProduct;
 import com.example.shirtsalesapp.model.Product;
 import com.example.shirtsalesapp.activity.product.ProducDetailActivity;
 
@@ -33,10 +38,11 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private List<Product> productList;
     private int viewType;
-
-    public ProductAdapter(List<Product> productList, int type) {
+    private CartManager cartManager;
+    public ProductAdapter(Context context, List<Product> productList, int type) {
         this.productList = productList;
         this.viewType = type;
+        this.cartManager = new CartManager(context);
     }
 
     @Override
@@ -77,6 +83,23 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     v.getContext().startActivity(intent);
                 }
             });
+            ((ProductViewHolder) holder).addToCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cart cart = cartManager.loadCart();
+                    if (cart == null) {
+                        cart = new Cart();
+                        cart.setUserId(1); // Assuming a user ID here
+                    }
+                    CartProduct cartProduct = new CartProduct();
+                    cartProduct.setProductID(product.getId());
+                    cartProduct.setQuantity(1); // Default quantity
+                    cart.addProduct(cartProduct);
+                    cartManager.saveCart(cart);
+
+                    Toast.makeText(v.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                }
+            });
         } else if (holder instanceof ProductItemViewHolder) {
             ((ProductItemViewHolder) holder).bind(product);
         }
@@ -92,12 +115,15 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView productName;
         TextView productPrice;
         ImageView productImage;
+        ImageButton addToCart;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.tv_product_name);
             productPrice = itemView.findViewById(R.id.tv_product_price);
             productImage = itemView.findViewById(R.id.product_image);
+            addToCart = itemView.findViewById(R.id.button_addToCart);
+
         }
 
         public void bind(Product product) {

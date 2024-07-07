@@ -55,6 +55,13 @@
                 android:textSize="14sp"
                 android:textColor="#FF5722"
                 android:gravity="center" />
+            <ImageButton
+                android:id="@+id/button_addToCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cart"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/cardview_light_background"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
