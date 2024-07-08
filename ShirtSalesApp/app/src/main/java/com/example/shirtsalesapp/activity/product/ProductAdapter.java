@@ -39,6 +39,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<Product> productList;
     private int viewType;
     private CartManager cartManager;
+    private Cart cart;
     public ProductAdapter(Context context, List<Product> productList, int type) {
         this.productList = productList;
         this.viewType = type;
@@ -54,23 +55,31 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
+
         if (viewType == 1) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.activity_card_item_product, parent, false);
+            cartManager = new CartManager(view.getContext());
+
             return new ProductViewHolder(view);
         } else if (viewType == 2) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_product, parent, false);
+            cartManager = new CartManager(view.getContext());
+
             return new ProductItemViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.activity_card_item_product, parent, false);
+            cartManager = new CartManager(view.getContext());
+
             return new ProductViewHolder(view);
         }
     }
 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Product product = productList.get(position);
+        cart = cartManager.loadCart();
         if (holder instanceof ProductViewHolder) {
             ((ProductViewHolder) holder).bind(product);
             // Add On click
@@ -86,17 +95,25 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((ProductViewHolder) holder).addToCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Cart cart = cartManager.loadCart();
-                    if (cart == null) {
-                        cart = new Cart();
-                        cart.setUserId(1); // Assuming a user ID here
-                    }
-                    CartProduct cartProduct = new CartProduct();
-                    cartProduct.setProductID(product.getId());
-                    cartProduct.setQuantity(1); // Default quantity
-                    cart.addProduct(cartProduct);
-                    cartManager.saveCart(cart);
 
+
+
+                    boolean check = true;
+                    for(CartProduct c : cart.getProducts()){
+                        if(c.getProductId() == product.getId()){
+                            c.setQuantity(c.getQuantity() + 1);
+                            Toast.makeText(v.getContext(), "Duplicated item +1 Quantity", Toast.LENGTH_SHORT).show();
+                            check = false;
+                        }
+                    }
+                    if(check){
+                        CartProduct cartProduct = new CartProduct();
+                        cartProduct.setProductId(product.getId());
+                        cartProduct.setQuantity(1); // Default quantity
+                        cartProduct.setStatus(1);
+                        cart.addProduct(cartProduct);
+                    }
+                    cartManager.saveCart(cart);
                     Toast.makeText(v.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
                 }
             });

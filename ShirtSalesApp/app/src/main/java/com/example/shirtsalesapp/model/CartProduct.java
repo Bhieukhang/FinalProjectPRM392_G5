@@ -1,60 +1,61 @@
 package com.example.shirtsalesapp.model;
 
 public class CartProduct {
-    private int ID;
-    private int CartID;
-    private int ProductID;
-    private int Quantity;
-    private String Status;
+    private int id;
+    private int productId;
+    private String productName;
+    private int cartId;
+    private int quantity;
+    private int status;
 
     public CartProduct() {
     }
 
-    public CartProduct(int ID, int cartID, int productID, int quantity, String status) {
-        this.ID = ID;
-        CartID = cartID;
-        ProductID = productID;
-        Quantity = quantity;
-        Status = status;
+    public String getProductName() {
+        return productName;
     }
 
-    public int getID() {
-        return ID;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public int getId() {
+        return id;
     }
 
-    public int getCartID() {
-        return CartID;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setCartID(int cartID) {
-        CartID = cartID;
+    public int getProductId() {
+        return productId;
     }
 
-    public int getProductID() {
-        return ProductID;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public void setProductID(int productID) {
-        ProductID = productID;
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
     public int getQuantity() {
-        return Quantity;
+        return quantity;
     }
 
     public void setQuantity(int quantity) {
-        Quantity = quantity;
+        this.quantity = quantity;
     }
 
-    public String getStatus() {
-        return Status;
+    public int getStatus() {
+        return status;
     }
 
-    public void setStatus(String status) {
-        Status = status;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

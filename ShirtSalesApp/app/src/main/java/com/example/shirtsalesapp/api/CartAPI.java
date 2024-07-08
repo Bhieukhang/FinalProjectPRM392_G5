@@ -1,7 +1,6 @@
 package com.example.shirtsalesapp.api;
 
 import com.example.shirtsalesapp.model.Cart;
-import com.example.shirtsalesapp.model.CartProduct;
 
 import java.util.List;
 
@@ -14,12 +13,21 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface CartAPI {
-    @GET("api/cart")
-    Call<List<Cart>> getCartItems();
+    @GET("/api/Cart/GetAllCarts")
+    Call<List<Cart>> getAllCarts();
 
-    @POST("api/Cart/CreateCart")
+    @GET("/api/Cart/GetCartById/{id}")
+    Call<Cart> getCartById(@Path("id") int cartId);
+
+    @POST("/api/Cart/CreateCart")
     Call<Cart> createCart(@Body Cart cart);
 
-    @PUT("api/Cart/UpdateCart/{id}")
+    @PUT("/api/Cart/UpdateCart/{id}")
     Call<Cart> updateCart(@Path("id") int cartId, @Body Cart cart);
+
+    @DELETE("/api/Cart/DeleteCart/{id}")
+    Call<Void> deleteCart(@Path("id") int cartId);
+
+    @PUT("/api/Cart/UpdateCartStatus/{id}/{status}")
+    Call<Void> updateCartStatus(@Path("id") int cartId, @Path("status") int status);
 }

@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
 import com.example.shirtsalesapp.activity.cart.CartActivity;
+import com.example.shirtsalesapp.activity.cart.CartManager;
 import com.example.shirtsalesapp.api.ProductAPI;
+import com.example.shirtsalesapp.model.Cart;
 import com.example.shirtsalesapp.model.Product;
 import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.RetrofitClient;
@@ -41,12 +43,20 @@ public class ProductListActivity extends AppCompatActivity {
     private LinearLayout searchContainer;
     private View outsideView;
     private ImageView iconFilter, iconCart;
+    private CartManager cartManager;
+    private Cart cart;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_cloth);
-
+        cartManager = new CartManager(ProductListActivity.this);
+        if(cartManager.loadCart() == null){
+            cart = new Cart();
+            // Set Default
+            cart.setUserId(1);
+            cartManager.saveCart(cart);
+        }
         etSearch = findViewById(R.id.et_search);
         btnSearch = findViewById(R.id.btn_search);
         btnSearchInside = findViewById(R.id.btn_search_inside);

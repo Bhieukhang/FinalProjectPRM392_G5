@@ -49,4 +49,7 @@ public class Cart {
     public void addProduct(CartProduct product) {
         this.products.add(product);
     }
+    public void removeProduct(CartProduct product) {
+        this.products.remove(product);
+    }
 }

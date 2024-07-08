@@ -2,7 +2,6 @@ package com.example.shirtsalesapp.activity.product;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,8 +24,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.shirtsalesapp.R;
-import com.example.shirtsalesapp.activity.cart.CartActivity;
 import com.example.shirtsalesapp.activity.cart.CartManager;
+import com.example.shirtsalesapp.api.CartAPI;
 import com.example.shirtsalesapp.api.CategoryAPI;
 import com.example.shirtsalesapp.model.Cart;
 import com.example.shirtsalesapp.model.CartProduct;
@@ -39,6 +38,7 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ProducDetailActivity extends AppCompatActivity {
     private ImageView productImage;
@@ -50,13 +50,14 @@ public class ProducDetailActivity extends AppCompatActivity {
     private Category category;
     private Button addToCart;
     private CartManager cartManager;
+    private Cart cart;
+    private CartProduct cartProduct;
     //private Product product;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_produc_detail);
-
 
         cartManager = new CartManager(this);
 
@@ -82,17 +83,27 @@ public class ProducDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Cart cart = cartManager.loadCart();
-                if (cart == null) {
+                if (cart == null || cart.getStatus()==0) {
                     cart = new Cart();
-                    cart.setUserId(1);  // Assuming a user ID here
+                    cart.setUserId(1); // Assuming a user ID here
                 }
-                CartProduct cartProduct = new CartProduct();
-                cartProduct.setProductID(product.getId());
-                cartProduct.setQuantity(1);  // Default quantity
-                cart.addProduct(cartProduct);
+                boolean check = true;
+                for(CartProduct c : cart.getProducts()){
+                    if(c.getProductId() == product.getId()){
+                        c.setQuantity(c.getQuantity()+1);
+                        check = false;
+                    }
+                }
+                if(check){
+                    CartProduct cartProduct = new CartProduct();
+                    cartProduct.setProductId(product.getId());
+                    cartProduct.setQuantity(1); // Default quantity
+                    cartProduct.setStatus(1);
+                    cart.addProduct(cartProduct);
+                }
                 cartManager.saveCart(cart);
-
                 Toast.makeText(v.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+
                 finish();
             }
         });
