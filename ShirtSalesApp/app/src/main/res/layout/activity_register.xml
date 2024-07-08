@@ -27,7 +27,11 @@
         android:layout_marginTop="16dp"
         android:hint="Tên đăng nhập"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"/>
+        android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_user"
+        android:drawablePadding="8dp"
+        android:textColor="#000000"
+        android:textColorHint="#888888"/>
 
     <!-- Password EditText -->
     <EditText
@@ -39,7 +43,11 @@
         android:hint="Mật khẩu"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"/>
+        android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_lock"
+        android:drawablePadding="8dp"
+        android:textColor="#000000"
+        android:textColorHint="#888888"/>
 
     <!-- Confirm Password EditText -->
     <EditText
@@ -51,7 +59,11 @@
         android:hint="Xác nhận mật khẩu"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:background="@drawable/edit_text_background"/>
+        android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_lock"
+        android:drawablePadding="8dp"
+        android:textColor="#000000"
+        android:textColorHint="#888888"/>
 
     <!-- Register Button -->
     <Button
@@ -73,7 +85,7 @@
         android:layout_below="@id/registerButton"
         android:layout_marginTop="16dp"
         android:text="Đã có tài khoản? Đăng nhập"
-        android:background="@drawable/button_background"
+        android:background="@drawable/button_background_secondary"
         android:textColor="#FFFFFF"
         android:padding="12dp"/>
 </RelativeLayout>

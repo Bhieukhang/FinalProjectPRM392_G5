@@ -4,15 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".activity.product.ProductListActivity">
 
     <!-- Title and Search Button -->
-
     <RelativeLayout
         android:id="@+id/title_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
 
         <TextView
             android:id="@+id/tv_title"
@@ -20,7 +22,8 @@
             android:layout_height="wrap_content"
             android:text="Welcome Back"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#333333" />
 
         <ImageButton
             android:id="@+id/btn_search"
@@ -31,8 +34,6 @@
             android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_search"
             android:contentDescription="Search" />
-
-
     </RelativeLayout>
 
     <!-- Search Container -->
@@ -45,7 +46,8 @@
         android:orientation="horizontal"
         android:visibility="gone"
         android:background="@drawable/search_background"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:elevation="4dp">
 
         <EditText
             android:id="@+id/et_search"
@@ -54,7 +56,8 @@
             android:layout_weight="1"
             android:hint="Search..."
             android:padding="12dp"
-            android:background="@drawable/edit_text_no_underline" />
+            android:background="@drawable/edit_text_no_underline"
+            android:textColor="#333333" />
 
         <ImageButton
             android:id="@+id/btn_search_inside"
@@ -63,7 +66,6 @@
             android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_search"
             android:contentDescription="Search" />
-
     </LinearLayout>
 
     <!-- New Collection and Filter Icon -->
@@ -71,14 +73,17 @@
         android:id="@+id/collection_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_container">
+        android:layout_below="@id/search_container"
+        android:padding="16dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Collection"
             android:textSize="24sp"
-            android:padding="16dp" />
+            android:textColor="#333333" />
 
         <ImageView
             android:id="@+id/iconFilter"
@@ -88,6 +93,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="50dp"/>
+
         <ImageButton
             android:id="@+id/icon_cart"
             android:layout_width="wrap_content"
@@ -95,8 +101,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_cart"
-            android:backgroundTint="@color/cardview_light_background">
-
+            android:backgroundTint="@android:color/transparent">
         </ImageButton>
     </RelativeLayout>
 

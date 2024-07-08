@@ -1,63 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     tools:context=".activity.manager.account.AccountActivity">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="0dp"
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/btn_backManageAccount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_alignParentStart="true"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/baseline_arrow_back_ios_"
+        android:contentDescription="Back" />
 
-        <TextView
-            android:id="@+id/account"
+    <!-- Title -->
+    <TextView
+        android:id="@+id/account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Account"
+        android:textColor="#333333"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Tab Layout -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account"
+        android:layout_marginTop="8dp"
+        app:tabIndicatorColor="#FFA726"
+        app:tabSelectedTextColor="#FFA726"
+        app:tabTextColor="#666666">
+
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="173dp"
-            android:text="Account"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/account"
-            android:layout_marginTop="8dp">
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Active"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Inactive"/>
-        </com.google.android.material.tabs.TabLayout>
-
-        <ImageView
-            android:id="@+id/btn_backManageAccount"
+            android:text="Active"/>
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/baseline_arrow_back_ios_" />
+            android:text="Inactive"/>
+    </com.google.android.material.tabs.TabLayout>
 
-    </RelativeLayout>
-
+    <!-- ViewPager2 -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/relativeLayout2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
