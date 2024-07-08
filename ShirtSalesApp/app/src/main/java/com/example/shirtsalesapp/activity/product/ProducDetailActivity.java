@@ -57,6 +57,9 @@ public class ProducDetailActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_produc_detail);
 
+
+        cartManager = new CartManager(this);
+
         Product product = (Product) getIntent().getSerializableExtra("productItem");
 
         productImage = findViewById(R.id.image_product);
@@ -81,20 +84,16 @@ public class ProducDetailActivity extends AppCompatActivity {
                 Cart cart = cartManager.loadCart();
                 if (cart == null) {
                     cart = new Cart();
-
-                    cart.setUserId(1);
+                    cart.setUserId(1);  // Assuming a user ID here
                 }
-                CartProduct cartproduct = new CartProduct();  // Create a new CartProduct instance
-                // Populate product details from UI or product data
-                cartproduct.setProductID(product.getId());
-                cart.addProduct(cartproduct);
+                CartProduct cartProduct = new CartProduct();
+                cartProduct.setProductID(product.getId());
+                cartProduct.setQuantity(1);  // Default quantity
+                cart.addProduct(cartProduct);
                 cartManager.saveCart(cart);
 
-                Toast.makeText(ProducDetailActivity.this, "Product added to cart", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(),CartActivity.class);
-
-                intent.putExtra("productItem", product);
-                v.getContext().startActivity(intent);
+                Toast.makeText(v.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 

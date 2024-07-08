@@ -33,7 +33,7 @@ public class CartManager {
     }
 
     public Cart loadCart() {
-        String cartJson = sharedPreferences.getString("cart", null);
+        String cartJson = sharedPreferences.getString("cart", "[]");
         return cartJson == null ? new Cart() : gson.fromJson(cartJson, Cart.class);
     }
 }
