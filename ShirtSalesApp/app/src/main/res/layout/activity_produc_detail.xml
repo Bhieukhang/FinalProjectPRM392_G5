@@ -10,7 +10,8 @@
         android:id="@+id/image_product"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:layout_marginTop="40dp"/>
 
     <TextView
         android:id="@+id/text_product_name"
@@ -32,6 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/text_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"/>
 
     <Button
         android:id="@+id/button_add_to_cart"

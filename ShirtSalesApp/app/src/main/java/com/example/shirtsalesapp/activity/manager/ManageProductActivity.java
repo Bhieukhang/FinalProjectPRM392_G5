@@ -73,7 +73,7 @@ public class ManageProductActivity extends AppCompatActivity {
         ProductService.fetchAllProducts(new ProductService.ProductApiCallback() {
             @Override
             public void onSuccess(List<Product> productList) {
-                productAdapter = new ProductAdapter(productList, 2);
+                productAdapter = new ProductAdapter(ManageProductActivity.this,productList, 2);
                 rvListProduct.setAdapter(productAdapter);
             }
 
