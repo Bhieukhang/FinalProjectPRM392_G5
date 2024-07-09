@@ -24,7 +24,8 @@ import okhttp3.Response;
 
 public class CreateProductActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
-    private EditText editTextTitle, editTextProductName, editTextProductDescription, editTextProductPrice, editTextProductQuantity, editTextCategoryId;
+    private EditText editTextTitle, editTextProductName, editTextProductDescription,
+            editTextProductPrice, editTextProductQuantity, editTextCategoryId;
     private Button buttonSelectImage, buttonSubmit;
     private Uri imageUri;
 
@@ -84,7 +85,8 @@ public class CreateProductActivity extends AppCompatActivity {
         String productQuantity = editTextProductQuantity.getText().toString().trim();
         String categoryId = editTextCategoryId.getText().toString().trim();
 
-        if (title.isEmpty() || productName.isEmpty() || productDescription.isEmpty() || productPrice.isEmpty() || productQuantity.isEmpty() || categoryId.isEmpty() || imageUri == null) {
+        if (title.isEmpty() || productName.isEmpty() || productDescription.isEmpty()
+                || productPrice.isEmpty() || productQuantity.isEmpty() || categoryId.isEmpty() || imageUri == null) {
             Toast.makeText(this, "Please fill all fields and select an image", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -100,11 +102,12 @@ public class CreateProductActivity extends AppCompatActivity {
                 .addFormDataPart("Quantity", productQuantity)
                 .addFormDataPart("CategoryId", categoryId)
                 .addFormDataPart("Image", "image.jpg",
-                        RequestBody.create(MediaType.parse("image/jpeg"), getContentResolver().openInputStream(imageUri).toString()))
+                        RequestBody.create(MediaType.parse("image/jpeg"),
+                                getContentResolver().openInputStream(imageUri).toString()))
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://yourapiurl.com/api/CreateProduct")
+                .url("https://realityprint.somee.com/api/Product/CreateProduct")
                 .post(requestBody)
                 .build();
 

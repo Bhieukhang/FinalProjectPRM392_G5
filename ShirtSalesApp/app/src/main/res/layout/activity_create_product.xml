@@ -27,11 +27,10 @@
         android:layout_height="wrap_content"
         android:hint="Title"
         android:inputType="text"
-        android:padding="12dp"
+        android:padding="16dp"
         android:background="@drawable/edit_text_background"
         android:textColor="@color/primaryText"
         android:textSize="16sp"
-        android:hintTextColor="@color/hintText"
         android:layout_below="@id/textViewTitle"
         android:layout_marginTop="8dp" />
 
@@ -42,11 +41,10 @@
         android:layout_height="wrap_content"
         android:hint="Product Name"
         android:inputType="text"
-        android:padding="12dp"
+        android:padding="16dp"
         android:background="@drawable/edit_text_background"
         android:textColor="@color/primaryText"
         android:textSize="16sp"
-        android:hintTextColor="@color/hintText"
         android:layout_below="@id/editTextTitle"
         android:layout_marginTop="8dp" />
 
@@ -57,11 +55,10 @@
         android:layout_height="wrap_content"
         android:hint="Product Description"
         android:inputType="text"
-        android:padding="12dp"
+        android:padding="16dp"
         android:background="@drawable/edit_text_background"
         android:textColor="@color/primaryText"
         android:textSize="16sp"
-        android:hintTextColor="@color/hintText"
         android:layout_below="@id/editTextProductName"
         android:layout_marginTop="8dp" />
 
@@ -72,11 +69,10 @@
         android:layout_height="wrap_content"
         android:hint="Product Price"
         android:inputType="numberDecimal"
-        android:padding="12dp"
+        android:padding="16dp"
         android:background="@drawable/edit_text_background"
         android:textColor="@color/primaryText"
         android:textSize="16sp"
-        android:hintTextColor="@color/hintText"
         android:layout_below="@id/editTextProductDescription"
         android:layout_marginTop="8dp" />
 
@@ -87,11 +83,10 @@
         android:layout_height="wrap_content"
         android:hint="Product Quantity"
         android:inputType="number"
-        android:padding="12dp"
+        android:padding="16dp"
         android:background="@drawable/edit_text_background"
         android:textColor="@color/primaryText"
         android:textSize="16sp"
-        android:hintTextColor="@color/hintText"
         android:layout_below="@id/editTextProductPrice"
         android:layout_marginTop="8dp" />
 
@@ -102,11 +97,10 @@
         android:layout_height="wrap_content"
         android:hint="Category ID"
         android:inputType="number"
-        android:padding="12dp"
+        android:padding="16dp"
         android:background="@drawable/edit_text_background"
         android:textColor="@color/primaryText"
         android:textSize="16sp"
-        android:hintTextColor="@color/hintText"
         android:layout_below="@id/editTextProductQuantity"
         android:layout_marginTop="8dp" />
 
@@ -118,7 +112,7 @@
         android:text="Select Image"
         android:backgroundTint="@color/buttonBackground"
         android:textColor="@color/buttonText"
-        android:padding="12dp"
+        android:padding="16dp"
         android:layout_below="@id/editTextCategoryId"
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true" />
@@ -131,7 +125,7 @@
         android:text="Create Product"
         android:backgroundTint="@color/buttonBackground"
         android:textColor="@color/buttonText"
-        android:padding="12dp"
+        android:padding="16dp"
         android:layout_below="@id/buttonSelectImage"
         android:layout_marginTop="16dp" />
 </RelativeLayout>
