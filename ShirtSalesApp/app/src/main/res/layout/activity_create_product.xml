@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/background"
+    tools:context=".CreateProductActivity">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create New Product"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/primaryText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentTop="true"/>
+
+    <!-- Product Name -->
+    <EditText
+        android:id="@+id/editTextProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product Name"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:hintTextColor="@color/hintText"
+        android:layout_below="@id/textViewTitle"
+        android:layout_marginTop="8dp" />
+
+    <!-- Product Description -->
+    <EditText
+        android:id="@+id/editTextProductDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product Description"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:hintTextColor="@color/hintText"
+        android:layout_below="@id/editTextProductName"
+        android:layout_marginTop="8dp" />
+
+    <!-- Product Price -->
+    <EditText
+        android:id="@+id/editTextProductPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product Price"
+        android:inputType="numberDecimal"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:hintTextColor="@color/hintText"
+        android:layout_below="@id/editTextProductDescription"
+        android:layout_marginTop="8dp" />
+
+    <!-- Product Image -->
+    <Button
+        android:id="@+id/buttonSelectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Image"
+        android:backgroundTint="@color/buttonBackground"
+        android:textColor="@color/buttonText"
+        android:padding="12dp"
+        android:layout_below="@id/editTextProductPrice"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Product"
+        android:backgroundTint="@color/buttonBackground"
+        android:textColor="@color/buttonText"
+        android:padding="12dp"
+        android:layout_below="@id/buttonSelectImage"
+        android:layout_marginTop="16dp" />
+</RelativeLayout>
