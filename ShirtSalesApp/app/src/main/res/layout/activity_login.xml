@@ -55,7 +55,7 @@
         android:layout_below="@id/passwordEditText"
         android:layout_marginTop="24dp"
         android:text="Đăng nhập"
-        android:background="@drawable/button_background"
+        android:backgroundTint="@color/black"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:padding="16dp"/>
@@ -68,7 +68,7 @@
         android:layout_below="@id/loginButton"
         android:layout_marginTop="16dp"
         android:text="Chưa có tài khoản? Đăng ký"
-        android:background="@drawable/button_background_secondary"
+        android:backgroundTint="@color/black"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:padding="16dp"/>

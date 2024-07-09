@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:text="Tìm kiếm"
         android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/black"
         android:padding="12dp"
         android:layout_below="@id/cardViewInputs"
         android:layout_centerHorizontal="true"

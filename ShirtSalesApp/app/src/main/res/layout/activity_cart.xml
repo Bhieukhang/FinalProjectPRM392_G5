@@ -71,6 +71,6 @@
         android:text="Thanh Toán"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:background="@drawable/button_background"
+        android:backgroundTint="@color/black"
         android:padding="16dp" />
 </LinearLayout>
