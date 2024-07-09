@@ -56,10 +56,11 @@ public class ZaloPayMethodActivity extends AppCompatActivity {
         lblZpTransToken.setVisibility(View.INVISIBLE);
         txtToken.setVisibility(View.INVISIBLE);
         btnPay.setVisibility(View.INVISIBLE);
+        btnCreateOrder.setVisibility(View.INVISIBLE);
     }
     private void IsDone() {
-        lblZpTransToken.setVisibility(View.VISIBLE);
-        txtToken.setVisibility(View.VISIBLE);
+        lblZpTransToken.setVisibility(View.INVISIBLE);
+        txtToken.setVisibility(View.INVISIBLE);
         btnPay.setVisibility(View.VISIBLE);
     }
 
@@ -83,8 +84,15 @@ public class ZaloPayMethodActivity extends AppCompatActivity {
         }
         // Automatically trigger btnCreateOrder click
         boolean automaticCreateOrder = getIntent().getBooleanExtra("AUTOMATIC_CREATE_ORDER", false);
-
-
+        if (automaticCreateOrder) {
+            // Tự động kích hoạt sự kiện onClick của btnCreateOrder
+            btnCreateOrder.post(new Runnable() {
+                @Override
+                public void run() {
+                    btnCreateOrder.performClick();
+                }
+            });
+        }
         // handle CreateOrder
         btnCreateOrder.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -95,7 +103,7 @@ public class ZaloPayMethodActivity extends AppCompatActivity {
 
                 try {
                     JSONObject data = orderApi.createOrder(txtAmount.getText().toString());
-                    Log.d("ZaloPayMethodActivity", "createOrder Response: " + data.toString());
+                   // Log.d("ZaloPayMethodActivity", "createOrder Response: " + data.toString());
                     String code = data.getString("return_code");
                     Toast.makeText(getApplicationContext(), "return_code: " + code, Toast.LENGTH_LONG).show();
 
@@ -115,7 +123,6 @@ public class ZaloPayMethodActivity extends AppCompatActivity {
                     Log.e("ZaloPayMethodActivity", "Exception in createOrder: " + e.getMessage());
                     // Handle exception
                 }
-
             }
         });
 
@@ -130,21 +137,18 @@ public class ZaloPayMethodActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 new AlertDialog.Builder(ZaloPayMethodActivity.this)
-                                        .setTitle("Payment Success")
-                                        .setMessage(String.format("TransactionId: %s - TransToken: %s", transactionId, transToken))
+                                        .setTitle("Thanh toán thành công")
+                                        .setMessage(String.format("Hóa đơn: %s - Mã thanh toán: %s", transactionId, transToken))
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 clearCartSession(); // Clear cart session if necessary
-
-                                                // Create intent to navigate back to ProductListActivity
                                                 Intent intent = new Intent(ZaloPayMethodActivity.this, ProductListActivity.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                 startActivity(intent);
-                                                finish(); // Optional: finish current activity
+                                                finish();// Optional: finish current activity
 
-                                                // Alternatively, if you want to keep ZaloPayMethodActivity in the stack
-                                                //startActivity(intent);
+
                                             }
                                         })
                                         .setNegativeButton("Cancel", null)
