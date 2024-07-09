@@ -90,16 +90,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNavigationViewCustomer"
         android:layout_below="@id/collection_container"
-        android:layout_above="@id/bottomNavigationView"
+        android:layout_marginTop="44dp"
         android:padding="8dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp" />
 
     <!-- Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@+id/bottomNavigationViewCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -150,11 +150,11 @@
     <!-- Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
         android:layout_below="@+id/balance_card"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="379dp"
+        android:layout_marginTop="397dp"
         app:menu="@menu/navigation_bar_manager"
         tools:layout_editor_absoluteX="-16dp"></com.google.android.material.bottomnavigation.BottomNavigationView>
 
