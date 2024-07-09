@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Add to Cart"
-        android:background="@drawable/button_background"
+        android:backgroundTint="@color/black"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:padding="12dp"/>

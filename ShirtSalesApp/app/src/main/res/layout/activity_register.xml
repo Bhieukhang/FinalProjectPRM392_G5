@@ -73,7 +73,7 @@
         android:layout_below="@id/confirmPasswordEditText"
         android:layout_marginTop="24dp"
         android:text="Đăng ký"
-        android:background="@drawable/button_background"
+        android:backgroundTint="@color/black"
         android:textColor="#FFFFFF"
         android:padding="12dp"/>
 
@@ -85,7 +85,7 @@
         android:layout_below="@id/registerButton"
         android:layout_marginTop="16dp"
         android:text="Đã có tài khoản? Đăng nhập"
-        android:background="@drawable/button_background_secondary"
+        android:backgroundTint="@color/black"
         android:textColor="#FFFFFF"
         android:padding="12dp"/>
 </RelativeLayout>
