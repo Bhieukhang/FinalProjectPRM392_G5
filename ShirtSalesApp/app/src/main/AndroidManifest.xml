@@ -30,7 +30,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.manager.ManageAccountActivity"
-            android:exported="true"></activity>
+            android:exported="false">
+        </activity>
         <activity
             android:name=".activity.auth.LoginActivity"
             android:exported="false" />

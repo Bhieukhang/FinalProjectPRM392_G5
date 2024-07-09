@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.activity.cart.CartActivity;
+import com.example.shirtsalesapp.activity.cart.CartManager;
 import com.example.shirtsalesapp.activity.manager.ManageAccountActivity;
 import com.example.shirtsalesapp.activity.manager.ManagePaymentActivity;
 import com.example.shirtsalesapp.activity.manager.ManageProductActivity;

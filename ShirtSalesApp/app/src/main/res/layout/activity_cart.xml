@@ -8,6 +8,26 @@
     android:background="#F5F5F5"
     tools:context=".activity.cart.CartActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:id="@+id/button_back"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:backgroundTint="@color/cardview_light_background"
+            />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue Choose"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
     <!-- Title -->
     <TextView
         android:layout_width="match_parent"
@@ -33,6 +53,7 @@
 
     <!-- Total Amount -->
     <TextView
+        android:id="@+id/text_total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
