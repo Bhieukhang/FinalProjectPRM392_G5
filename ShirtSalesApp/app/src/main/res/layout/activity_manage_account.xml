@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F5F5F5"
+    android:padding="16dp"
+    tools:context=".activity.manager.ManageAccountActivity">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Tiêu đề "Account" -->
+        <TextView
+            android:id="@+id/fresh_milk_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Account"
+            android:textColor="#333333"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- Circle and Account Info -->
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:layout_marginTop="32dp"
+        android:padding="16dp">
+
+        <!-- Total account (circle) -->
+        <TextView
+            android:id="@+id/circle_text"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circle_shape"
+            android:gravity="center"
+            android:text="21"
+            android:textColor="@android:color/white"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <!-- Active Accounts -->
+        <RelativeLayout
+            android:id="@+id/totalActive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/circle_text"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/rounded_corner_orange"
+            android:padding="16dp">
+
+            <!-- TextView "All" -->
+            <TextView
+                android:id="@+id/link_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:text="All"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <!-- Active -->
+            <TextView
+                android:id="@+id/tv_total1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <!-- Total account -->
+            <TextView
+                android:id="@+id/course1_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_total1"
+                android:text="Total account"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <!-- Total account active -->
+            <TextView
+                android:id="@+id/tv_total_account_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/course1_hours"
+                android:layout_alignParentEnd="true"
+                android:text="0"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <!-- Image -->
+            <ImageView
+                android:id="@+id/course1_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_groups_account" />
+        </RelativeLayout>
+
+        <!-- Inactive Accounts -->
+        <RelativeLayout
+            android:id="@+id/tv_total2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/totalActive"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_corner_blue"
+            android:padding="16dp">
+
+            <!-- TextView "All" -->
+            <TextView
+                android:id="@+id/link_inactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:text="All"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <!-- Inactive -->
+            <TextView
+                android:id="@+id/course2_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Inactive"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <!-- Total account -->
+            <TextView
+                android:id="@+id/course2_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/course2_title"
+                android:text="Total account"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <!-- Total account inactive -->
+            <TextView
+                android:id="@+id/tv_total_account_inactive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/course2_hours"
+                android:layout_alignParentEnd="true"
+                android:text="0"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF" />
+
+            <!-- Image -->
+            <ImageView
+                android:id="@+id/course2_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_groups_account" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        app:menu="@menu/navigation_bar_manager">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+</RelativeLayout>

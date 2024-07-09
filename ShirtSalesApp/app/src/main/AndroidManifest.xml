@@ -18,25 +18,56 @@
         android:theme="@style/Theme.ShirtSalesApp"
         tools:targetApi="31">
 
+        <!-- Activities -->
         <activity
-            android:name=".ZaloPayMethodActivity"
-            android:label="Merchant Demo"
-            android:launchMode="singleTask"
+            android:name=".activity.cart.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.manager.MenuManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.manager.account.AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.manager.ManagePaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.manager.ManageAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.manager.ManageProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.product.ProducDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.auth.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.product.ProductListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ZaloPayMethodActivity"
+            android:exported="true"
+            android:label="Merchant Demo"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="demozpdk"
-                    android:host="app" />
+                    android:host="app"
+                    android:scheme="demozpdk" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
