@@ -30,6 +30,7 @@ import com.example.shirtsalesapp.activity.cart.CartManager;
 import com.example.shirtsalesapp.activity.manager.ManageAccountActivity;
 import com.example.shirtsalesapp.activity.manager.ManagePaymentActivity;
 import com.example.shirtsalesapp.activity.manager.ManageProductActivity;
+import com.example.shirtsalesapp.activity.store.StoreActivity;
 import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.Cart;
 import com.example.shirtsalesapp.model.Product;
@@ -54,7 +55,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ImageButton btnSearch, btnSearchInside;
     private LinearLayout searchContainer;
     private View outsideView;
-    private ImageView iconFilter, iconCart;
+    private ImageView iconFilter, iconCart, icHome;
     private CartManager cartManager;
     private Cart cart;
 
@@ -69,12 +70,20 @@ public class ProductListActivity extends AppCompatActivity {
             cart.setUserId(1);
             cartManager.saveCart(cart);
         }
+        icHome = findViewById(R.id.ic_home_store);
         etSearch = findViewById(R.id.et_search);
         btnSearch = findViewById(R.id.btn_search);
         btnSearchInside = findViewById(R.id.btn_search_inside);
         searchContainer = findViewById(R.id.search_container);
 //        iconFilter = findViewById(R.id.iconFilter);
         iconCart = findViewById(R.id.icon_cart);
+        icHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductListActivity.this, StoreActivity.class);
+                startActivity(intent);
+            }
+        });
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

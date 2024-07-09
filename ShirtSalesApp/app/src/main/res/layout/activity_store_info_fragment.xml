@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/funnycapybara"
+                android:src="@drawable/img_lemur_baby"
                 android:layout_marginBottom="16dp" />
 
             <TextView
