@@ -22,8 +22,21 @@
             android:exported="false" />
         <!-- Activities -->
         <activity
+            android:name=".activity.store.StoreActivity"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".activity.store.StoreInfoFragment"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
             android:name=".activity.cart.CartActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.product.CreateProductActivity"
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".activity.manager.MenuManageActivity"
             android:exported="false" />
@@ -35,13 +48,20 @@
             android:exported="false" />
         <activity
             android:name=".activity.manager.ManageAccountActivity"
-            android:exported="false" />
+            android:exported="true">
+        </activity>
         <activity
             android:name=".activity.auth.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".activity.manager.ManageProductActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.product.ProducDetailActivity"
             android:exported="false" />
@@ -73,6 +93,10 @@
                     android:scheme="demozpdk" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDQRxpdhh_FZteuSyUJvUWxIbIHuTCv8IU" />
     </application>
 
 </manifest>

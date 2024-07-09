@@ -1,15 +1,20 @@
 package com.example.shirtsalesapp.activity.product;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +37,7 @@ import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.RetrofitClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -67,7 +73,7 @@ public class ProductListActivity extends AppCompatActivity {
         btnSearch = findViewById(R.id.btn_search);
         btnSearchInside = findViewById(R.id.btn_search_inside);
         searchContainer = findViewById(R.id.search_container);
-        iconFilter = findViewById(R.id.iconFilter);
+//        iconFilter = findViewById(R.id.iconFilter);
         iconCart = findViewById(R.id.icon_cart);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +83,21 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
+        etSearch.setImeOptions(EditorInfo.IME_ACTION_DONE); // Hiển thị nút "Hoàn thành"
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // Xử lý tại đây khi người dùng ấn nút "Hoàn thành"
+                    performSearch(etSearch.getText().toString());
+                    // Ẩn bàn phím sau khi hoàn thành
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
         btnSearchInside.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,15 +105,15 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
-        iconFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                ChooseProductDialogFragment dialogFragment = new ChooseProductDialogFragment();
-                dialogFragment.show(fragmentManager, "dialog_choose_product");
-            }
-        });
-        //Conflict ???
+//        iconFilter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                ChooseProductDialogFragment dialogFragment = new ChooseProductDialogFragment();
+//                dialogFragment.show(fragmentManager, "dialog_choose_product");
+//            }
+//        });
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationViewCustomer);
         setupBottomNavigation(bottomNavigationView);
 
@@ -132,12 +153,36 @@ public class ProductListActivity extends AppCompatActivity {
 
     private void performSearch(String query) {
         if (!TextUtils.isEmpty(query)) {
-            // Handle the search functionality here
-            Toast.makeText(this, "Searching for: " + query, Toast.LENGTH_SHORT).show();
+            List<Product> filteredList = new ArrayList<>();
+            String[] keywords = query.toLowerCase().split("\\s+"); // Tách từ khóa tìm kiếm thành mảng từ
+
+            for (Product product : productList) {
+                String productName = product.getProductName().toLowerCase();
+                boolean found = true;
+
+                // Kiểm tra từng từ khóa trong query xem có trong tên sản phẩm không
+                for (String keyword : keywords) {
+                    if (!productName.contains(keyword)) {
+                        found = false;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    filteredList.add(product);
+                }
+            }
+
+            if (filteredList.isEmpty()) {
+                Toast.makeText(this, "No products found for: " + query, Toast.LENGTH_SHORT).show();
+            } else {
+                productAdapter.updateProductList(filteredList);
+            }
         } else {
             Toast.makeText(this, "Please enter a search query", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

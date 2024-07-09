@@ -1,11 +1,13 @@
 package com.example.shirtsalesapp.activity.manager.account;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,21 +33,66 @@ public class AccountActiveFragment extends Fragment {
 
     public AccountActiveFragment() {}
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_account_active,
-                container, false);
+        View view = inflater.inflate(R.layout.activity_account_active, container, false);
         Log.e("AccountActiveFragment", "view: " + view);
         listView = view.findViewById(R.id.listViewAccountActive);
         userList = new ArrayList<>();
         adapter = new AccountAdapter(requireContext(), userList);
         listView.setAdapter(adapter);
 
+        setupListViewClickListener();
+
         fetchDataFromApi();
 
         return view;
+    }
+
+    private void setupListViewClickListener() {
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            User selectedUser = userList.get(position);
+            showDeleteConfirmation(selectedUser);
+        });
+    }
+
+    private void showDeleteConfirmation(User user) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Confirm Delete");
+        builder.setMessage("Do you want to delete account?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            deleteUser(user.getId());
+        });
+        builder.setNegativeButton("No", null);
+        builder.show();
+    }
+
+    private void deleteUser(int userId) {
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+        AccountAPI apiService = retrofit.create(AccountAPI.class);
+        Call<Void> call = apiService.deleteUser(userId);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Xóa thành công, cập nhật lại danh sách
+                    userList.removeIf(user -> user.getId() == userId);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(requireContext(), "Account deleted successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("AccountActiveFragment", "Delete request failed: " + response.message());
+                    Toast.makeText(requireContext(), "Failed to delete account", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("AccountActiveFragment", "Network request failed", t);
+                Toast.makeText(requireContext(), "Network request failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void fetchDataFromApi() {
