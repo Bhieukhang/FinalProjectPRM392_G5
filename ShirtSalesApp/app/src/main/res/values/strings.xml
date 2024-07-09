@@ -8,4 +8,7 @@
     <string name="btn_pay">Thanh Toán</string>
     <string name="lbl_zptranstoken">zptranstoken</string>
     <string name="to_webview">To WebView</string>
+    <string name="product_image_desc">Product Image</string>
+    <string name="decrease_quantity">Decrease Quantity</string>
+    <string name="increase_quantity">Increase Quantity</string>
 </resources>

@@ -3,14 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="16dp"
+    android:background="@color/white"
+    android:elevation="4dp"
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/cardBackgroundColor">
 
     <ImageView
         android:id="@+id/image_product"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/img_ao_demo" /> <!-- Replace with your drawable resource -->
+        android:src="@drawable/img_ao_demo"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/product_image_desc" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,31 +29,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Product Name"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_marginBottom="4dp" />
+
         <TextView
             android:id="@+id/text_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product Name"
-            android:textSize="10sp" />
-
-
+            android:text="Product Price"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            android:fontFamily="@font/roboto_regular" />
     </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:gravity="center_vertical"
-        android:layout_marginRight="30dp">
+        android:gravity="center_vertical">
 
         <ImageButton
             android:id="@+id/button_decrease"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:text="-"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/ic_decrease"
-            android:textSize="18sp" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/decrease_quantity" />
 
         <TextView
             android:id="@+id/text_view_quantity"
@@ -56,17 +65,16 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="1"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_regular" />
 
         <ImageButton
             android:id="@+id/button_increase"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:text="+"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/ic_increase"
-            android:textSize="18sp" />
-
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/increase_quantity" />
     </LinearLayout>
-
-
 </LinearLayout>

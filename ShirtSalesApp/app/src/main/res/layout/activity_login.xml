@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#FFFFFF">
+    android:background="#F5F5F5">
 
     <!-- Logo or App Title -->
     <TextView
@@ -13,9 +13,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
         android:text="Shirt Sales"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="#000000"
+        android:textColor="#333333"
         android:layout_marginTop="40dp"/>
 
     <!-- Username EditText -->
@@ -26,8 +26,11 @@
         android:layout_below="@id/appTitle"
         android:layout_marginTop="16dp"
         android:hint="Tên đăng nhập"
-        android:padding="12dp"
-        android:background="@drawable/edit_text_background"/>
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_user"
+        android:textColor="#333333"
+        android:textSize="16sp"/>
 
     <!-- Password EditText -->
     <EditText
@@ -38,8 +41,11 @@
         android:layout_marginTop="16dp"
         android:hint="Mật khẩu"
         android:inputType="textPassword"
-        android:padding="12dp"
-        android:background="@drawable/edit_text_background"/>
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_lock"
+        android:textColor="#333333"
+        android:textSize="16sp"/>
 
     <!-- Login Button -->
     <Button
@@ -51,7 +57,8 @@
         android:text="Đăng nhập"
         android:background="@drawable/button_background"
         android:textColor="#FFFFFF"
-        android:padding="12dp"/>
+        android:textSize="16sp"
+        android:padding="16dp"/>
 
     <!-- Register Redirect Button -->
     <Button
@@ -63,6 +70,6 @@
         android:text="Chưa có tài khoản? Đăng ký"
         android:background="@drawable/button_background_secondary"
         android:textColor="#FFFFFF"
-        android:padding="12dp"/>
+        android:textSize="16sp"
+        android:padding="16dp"/>
 </RelativeLayout>
-
