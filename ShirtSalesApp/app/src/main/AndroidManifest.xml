@@ -23,7 +23,7 @@
         <!-- Activities -->
         <activity
             android:name=".activity.store.StoreActivity"
-            android:exported="false">
+            android:exported="true">
         </activity>
         <activity
             android:name=".activity.store.StoreInfoFragment"
@@ -35,7 +35,6 @@
         <activity
             android:name=".activity.product.CreateProductActivity"
             android:exported="false">
-
         </activity>
         <activity
             android:name=".activity.manager.MenuManageActivity"
@@ -55,12 +54,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.manager.ManageProductActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".activity.product.ProducDetailActivity"
