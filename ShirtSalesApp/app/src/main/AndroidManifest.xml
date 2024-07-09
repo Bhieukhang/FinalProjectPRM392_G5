@@ -20,6 +20,19 @@
 
         <!-- Activities -->
         <activity
+            android:name=".activity.store.StoreActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.store.StoreInfoFragment"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
             android:name=".activity.cart.CartActivity"
             android:exported="false" />
         <activity
@@ -48,11 +61,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.product.ProductListActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
+
         </activity>
         <activity
             android:name=".ZaloPayMethodActivity"
@@ -68,6 +78,10 @@
                     android:scheme="demozpdk" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDQRxpdhh_FZteuSyUJvUWxIbIHuTCv8IU" />
     </application>
 
 </manifest>
