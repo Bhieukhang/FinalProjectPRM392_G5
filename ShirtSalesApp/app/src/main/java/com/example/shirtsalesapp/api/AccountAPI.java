@@ -5,6 +5,7 @@ import com.example.shirtsalesapp.model.User;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -16,4 +17,7 @@ public interface AccountAPI {
     Call<Integer> getCountAccount();
     @GET("api/User/CountUsers")
     Call<Integer> getCountAcc(@Query("status") int status);
+
+    @DELETE("api/User/DeleteUser")
+    Call<Void> deleteUser(@Query("id") int id);
 }

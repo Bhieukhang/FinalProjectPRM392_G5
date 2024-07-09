@@ -41,7 +41,13 @@
             android:exported="false" />
         <activity
             android:name=".activity.manager.ManageAccountActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.auth.LoginActivity"
             android:exported="false" />
@@ -57,11 +63,6 @@
         <activity
             android:name=".activity.product.ProductListActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ZaloPayMethodActivity"
