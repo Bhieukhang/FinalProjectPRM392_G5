@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.ZaloPayMethodActivity;
 import com.example.shirtsalesapp.activity.product.ProducDetailActivity;
 import com.example.shirtsalesapp.activity.product.ProductListActivity;
 import com.example.shirtsalesapp.api.ProductAPI;
@@ -104,13 +105,22 @@ public class CartActivity extends AppCompatActivity {
         PayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Chuyen den trang thanh toan o day
-                double TotalPrice = Double.parseDouble(total.getText().toString().substring(6));
-                Log.d("Test",String.valueOf(TotalPrice));
-                // Lay tong tien o day
-                // Thanh toan thanh cong thi set Status cart = 0
-                // Call API luu cart (Da co san chi viec dung)
-                // End
+                String totalText = total.getText().toString();
+                String numericTotal = totalText.replaceAll("[^\\d.]", ""); // Remove all non-numeric characters except decimal point
+                try {
+                    double totalPrice = Double.parseDouble(numericTotal);
+                    Log.d("CartActivity", "Total Price: " + totalPrice);
+
+                    Intent intent = new Intent(CartActivity.this, ZaloPayMethodActivity.class);
+                    intent.putExtra("TOTAL_AMOUNT", String.valueOf((int) totalPrice)); // Convert to int to remove decimal if it's ".0"
+                    intent.putExtra("AUTOMATIC_CREATE_ORDER", true);
+                    startActivity(intent);
+
+                } catch (NumberFormatException e) {
+                    Log.e("CartActivity", "Error parsing total price", e);
+                    Toast.makeText(CartActivity.this, "Error parsing total price", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 //        PreferencesManager preferencesManager = new PreferencesManager(CartActivity.this);

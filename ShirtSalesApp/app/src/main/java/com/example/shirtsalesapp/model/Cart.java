@@ -52,4 +52,7 @@ public class Cart {
     public void removeProduct(CartProduct product) {
         this.products.remove(product);
     }
+    public void clearProducts() {
+        this.products.clear();
+    }
 }
