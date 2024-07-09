@@ -3,7 +3,7 @@
     <string name="lbl_Date">Ngày:</string>
     <string name="txt_Date">7/9/2024</string>
     <string name="lbl_sotien">Tổng số tiền:</string>
-    <string name="lbl_donhang">Xát nhận đơn hàng</string>
+    <string name="lbl_donhang">Xác nhận đơn hàng</string>
     <string name="lbl_address">Địa chỉ: Quận 9, Thủ Đức, Thành Phố Hồ Chí Minh</string>
     <string name="lbl_phone">Số liên Hệ: 0333888257</string>
     <string name="lbl_fullName">Thông tin khách hàng</string>

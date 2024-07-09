@@ -19,16 +19,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.example.shirtsalesapp.activity.cart.CartManager;
+import com.example.shirtsalesapp.activity.order.OrderActivity;
+import com.example.shirtsalesapp.activity.order.OrderRepository;
 import com.example.shirtsalesapp.activity.product.ProductListActivity;
+import com.example.shirtsalesapp.api.OrderService;
+import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.Cart;
+import com.example.shirtsalesapp.model.CartProduct;
+import com.example.shirtsalesapp.model.CreateOrderRequest;
+import com.example.shirtsalesapp.model.Product;
+import com.example.shirtsalesapp.model.RetrofitClient;
+import com.example.shirtsalesapp.model.order.CreateOrderDTO;
+import com.example.shirtsalesapp.model.order.CreateOrderDetailDTO;
 import com.example.shirtsalesapp.zaloApi.CreateOrder;
 
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import vn.zalopay.sdk.Environment;
 import vn.zalopay.sdk.ZaloPayError;
 import vn.zalopay.sdk.ZaloPaySDK;
@@ -142,6 +158,7 @@ public class ZaloPayMethodActivity extends AppCompatActivity {
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                createOrder();
                                                 clearCartSession(); // Clear cart session if necessary
                                                 Intent intent = new Intent(ZaloPayMethodActivity.this, ProductListActivity.class);
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -201,5 +218,80 @@ public class ZaloPayMethodActivity extends AppCompatActivity {
             cart.clearProducts();
             cartManager.saveCart(cart);
         }
+    }
+    private CartManager cartManager;
+    private List<CartProduct> cartProducts = new ArrayList<>();
+    private double totalPrice;
+    OrderService orderService;
+    public void createOrder(){
+        orderService = OrderRepository.getOrderService();
+    cartManager = new CartManager(this);
+    // Add new Cart to here when have User
+    Cart cart = cartManager.loadCart();
+
+    List<CartProduct> del = new ArrayList<>();
+        if (cart != null) {
+            for (CartProduct c : cart.getProducts()) {
+                if (c.getStatus() == 0) del.add(c);
+                else cartProducts.add(c);
+                // Assuming a getProducts method existselse ;
+            }
+            cart.getProducts().removeAll(del);
+            cartManager.saveCart(cart);
+
+            for (CartProduct cartProduct : cartProducts) {
+                Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+                ProductAPI productAPI = retrofit.create(ProductAPI.class);
+                productAPI.getProductById(cartProduct.getProductId()).enqueue(new Callback<Product>() {
+                    @Override
+                    public void onResponse(Call<Product> call, Response<Product> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            totalPrice += cartProduct.getQuantity() * response.body().getPrice();
+                            Log.d("API Response", "Response received" + response.body().getId());
+                            Log.d("Product Get id", "Successs" + totalPrice);
+                            CreateOrderDTO createOrderDTO = new CreateOrderDTO();
+                            createOrderDTO.FinalPrice = totalPrice;
+                            createOrderDTO.Address = "Quận 9, Thủ Đức, Thành Phố Hồ Chí Minh";
+                            createOrderDTO.PaymentId = 1;
+                            createOrderDTO.ShippingId = 1;
+                            createOrderDTO.UserId = 1;
+                            createOrderDTO.VoucherId = 1;
+                            createOrderDTO.TotalPrice = totalPrice;
+                            ArrayList<CreateOrderDetailDTO> list = new ArrayList<>();
+                            for (CartProduct item : cartProducts) {
+                                list.add(new CreateOrderDetailDTO(item.getProductId(), item.getQuantity(), response.body().getPrice()));
+                            }
+                            CreateOrderRequest orderRequest = new CreateOrderRequest();
+                            orderRequest.OrderDTO = createOrderDTO;
+                            orderRequest.OrderDetailDTO = list;
+                            try {
+                                Call<CreateOrderRequest> calling = orderService.createOrder(orderRequest);
+                                calling.enqueue(new Callback<CreateOrderRequest>() {
+                                    @Override
+                                    public void onResponse(Call<CreateOrderRequest> call, Response<CreateOrderRequest> response) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<CreateOrderRequest> call, Throwable t) {
+
+                                    }
+                                });
+                            } catch (Exception e) {
+                                Log.d("t", e.getMessage());
+                            }
+                        } else {
+                            Log.d("Product Get id", "Fail");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Product> call, Throwable t) {
+                        Log.d("Product Get id", "Fail API");
+                    }
+                });
+            }
+        }
+
     }
 }

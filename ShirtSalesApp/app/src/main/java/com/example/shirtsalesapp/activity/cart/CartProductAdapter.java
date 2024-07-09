@@ -38,7 +38,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.ViewHolder> {
-
     private List<CartProduct> cartProducts;
     private Context context;
     private CartManager cartManager;
@@ -202,6 +201,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<CartProductAdapter.
             imageView.setImageResource(R.drawable.img_ao_demo);
         }
     }
+
 
 }
 
