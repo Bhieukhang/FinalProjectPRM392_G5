@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">ShirtSalesApp</string>
-    <string name="lbl_sotien">Số Tiền</string>
-    <string name="lbl_donhang">DEMO</string>
-    <string name="btn_create_order">Tạo Đơn Hàng</string>
+    <string name="lbl_Date">Ngày:</string>
+    <string name="txt_Date">7/9/2024</string>
+    <string name="lbl_sotien">Tổng số tiền:</string>
+    <string name="lbl_donhang">Xát nhận đơn hàng</string>
+    <string name="lbl_address">Địa chỉ: Quận 9, Thủ Đức, Thành Phố Hồ Chí Minh</string>
+    <string name="lbl_phone">Số liên Hệ: 0333888257</string>
+    <string name="lbl_fullName">Thông tin khách hàng</string>
+    <string name="txt_fullName">Họ tên: Đỗ Hữu Thuận</string>
+    <string name="btn_create_order">Xát nhận</string>
     <string name="txt_amount_init">1000</string>
     <string name="txt_amount_hint">1000</string>
     <string name="btn_pay">Thanh Toán</string>

@@ -12,7 +12,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/lbl_donhang"
         android:textSize="24sp"
@@ -22,36 +22,108 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/txtFullName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_fullName"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        android:layout_marginTop="16dp"/>
+    <TextView
+        android:id="@+id/txt_Name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_fullName"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFullName"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/txtAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/lbl_address"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFullName" />
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_phone"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddress"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/txtDay"
+        android:layout_width="161dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/lbl_Date"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/txtDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhone" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="218dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="12dp"
+        android:padding="12dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtDay"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhone" />
+
+
+    <TextView
         android:id="@+id/lblSoTien"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="@string/lbl_sotien"
         android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtAmount"
+        app:layout_constraintEnd_toStartOf="@+id/txtAmount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDate"
+        android:layout_marginTop="32dp"/>
 
-    <EditText
+
+    <TextView
         android:id="@+id/txtAmount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
         android:hint="@string/txt_amount_hint"
-        android:inputType="number"
         android:padding="12dp"
         android:text="@string/txt_amount_init"
         android:textAlignment="center"
         android:textColor="#FF5722"
         android:textSize="18sp"
-        android:background="@drawable/edittext_background1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblSoTien" />
+        app:layout_constraintStart_toEndOf="@+id/lblSoTien"
+        app:layout_constraintTop_toBottomOf="@+id/txtDate" />
 
     <Button
         android:id="@+id/btnCreateOrder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/btn_create_order"
@@ -65,26 +137,30 @@
         android:id="@+id/lblZpTransToken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="@string/lbl_zptranstoken"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCreateOrder" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCreateOrder"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/txtToken"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:textColor="#4CAF50"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblZpTransToken" />
+        app:layout_constraintTop_toBottomOf="@+id/lblZpTransToken"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/btnPay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/btn_pay"
@@ -98,9 +174,9 @@
         android:id="@+id/txtResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:layout_marginTop="16dp"
         android:textSize="14sp"
+        android:gravity="center"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,9 +186,7 @@
         android:id="@+id/txtDebug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
