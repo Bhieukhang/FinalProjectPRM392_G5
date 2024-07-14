@@ -2,9 +2,8 @@ package com.example.shirtsalesapp.activity.product;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +24,12 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.activity.auth.LoginActivity;
 import com.example.shirtsalesapp.activity.cart.CartManager;
 import com.example.shirtsalesapp.model.Cart;
 import com.example.shirtsalesapp.model.CartProduct;
 import com.example.shirtsalesapp.model.Product;
-import com.example.shirtsalesapp.activity.product.ProducDetailActivity;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -40,6 +38,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private int viewType;
     private CartManager cartManager;
     private Cart cart;
+
     public ProductAdapter(Context context, List<Product> productList, int type) {
         this.productList = productList;
         this.viewType = type;
@@ -86,7 +85,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((ProductViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(),ProducDetailActivity.class);
+                    Intent intent = new Intent(v.getContext(), ProducDetailActivity.class);
 
                     intent.putExtra("productItem", product);
                     v.getContext().startActivity(intent);
@@ -95,35 +94,56 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ((ProductViewHolder) holder).addToCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
-
-                    boolean check = true;
-                    for(CartProduct c : cart.getProducts()){
-                        if(c.getProductId() == product.getId()){
-                            c.setQuantity(c.getQuantity() + 1);
-                            Toast.makeText(v.getContext(), "Duplicated item +1 Quantity", Toast.LENGTH_SHORT).show();
-                            check = false;
-                        }
+                    Context context = v.getContext();
+                    if (isLoggedIn(context)) {
+                        addToCart(context, product);
+                    } else {
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        intent.putExtra("productItem", product);
+                        context.startActivity(intent);
                     }
-                    if(check){
-                        CartProduct cartProduct = new CartProduct();
-                        cartProduct.setProductId(product.getId());
-                        cartProduct.setQuantity(1); // Default quantity
-                        cartProduct.setStatus(1);
-                        cart.addProduct(cartProduct);
-                    }
-                    cartManager.saveCart(cart);
-                    Toast.makeText(v.getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
                 }
             });
         } else if (holder instanceof ProductItemViewHolder) {
             ((ProductItemViewHolder) holder).bind(product);
         }
     }
+
     @Override
     public int getItemCount() {
         return productList.size();
+    }
+
+    private boolean isLoggedIn(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isLoggedIn", false);
+    }
+
+    private void addToCart(Context context, Product product) {
+        cart = cartManager.loadCart();
+        if (cart == null) {
+            cart = new Cart();
+            // Đặt userId cho giỏ hàng nếu cần thiết
+            // cart.setUserId(userId);
+        }
+
+        boolean check = true;
+        for (CartProduct c : cart.getProducts()) {
+            if (c.getProductId() == product.getId()) {
+                c.setQuantity(c.getQuantity() + 1);
+                Toast.makeText(context, "Duplicated item +1 Quantity", Toast.LENGTH_SHORT).show();
+                check = false;
+            }
+        }
+        if (check) {
+            CartProduct cartProduct = new CartProduct();
+            cartProduct.setProductId(product.getId());
+            cartProduct.setQuantity(1); // Default quantity
+            cartProduct.setStatus(1);
+            cart.addProduct(cartProduct);
+        }
+        cartManager.saveCart(cart);
+        Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
     }
 
     //Activity ProductList
@@ -140,7 +160,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             productPrice = itemView.findViewById(R.id.tv_product_price);
             productImage = itemView.findViewById(R.id.product_image);
             addToCart = itemView.findViewById(R.id.button_addToCart);
-
         }
 
         public void bind(Product product) {
@@ -213,5 +232,5 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.productList = newProductList;
         notifyDataSetChanged();
     }
-
 }
+
