@@ -2,9 +2,9 @@ package com.example.shirtsalesapp.activity.product;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +20,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.activity.auth.LoginActivity;
 import com.example.shirtsalesapp.activity.cart.CartActivity;
 import com.example.shirtsalesapp.activity.cart.CartManager;
 import com.example.shirtsalesapp.activity.manager.ManageAccountActivity;
@@ -34,11 +34,9 @@ import com.example.shirtsalesapp.activity.store.StoreActivity;
 import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.Cart;
 import com.example.shirtsalesapp.model.Product;
-import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.RetrofitClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,10 +50,9 @@ public class ProductListActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private List<Product> productList;
     private EditText etSearch;
-    private ImageButton btnSearch, btnSearchInside;
+    private ImageButton btnSearch, btnSearchInside, btnLogout;
     private LinearLayout searchContainer;
-    private View outsideView;
-    private ImageView iconFilter, iconCart, icHome;
+    private ImageView iconCart, icHome;
     private CartManager cartManager;
     private Cart cart;
 
@@ -74,9 +71,10 @@ public class ProductListActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.et_search);
         btnSearch = findViewById(R.id.btn_search);
         btnSearchInside = findViewById(R.id.btn_search_inside);
+        btnLogout = findViewById(R.id.btn_logout);
         searchContainer = findViewById(R.id.search_container);
-//        iconFilter = findViewById(R.id.iconFilter);
         iconCart = findViewById(R.id.icon_cart);
+
         icHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,25 +112,38 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
 
-//        iconFilter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                ChooseProductDialogFragment dialogFragment = new ChooseProductDialogFragment();
-//                dialogFragment.show(fragmentManager, "dialog_choose_product");
-//            }
-//        });
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationViewCustomer);
         setupBottomNavigation(bottomNavigationView);
 
         iconCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProductListActivity.this, CartActivity.class);
-                startActivity(intent);
+                Context context = v.getContext();
+                if (isLoggedIn(context)) {
+                    Intent intent = new Intent(ProductListActivity.this, CartActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    intent.putExtra("redirectTo", "cart");
+                    context.startActivity(intent);
+                }
             }
         });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+
+        // Kiểm tra trạng thái đăng nhập và hiển thị nút Logout nếu đã đăng nhập
+        if (isLoggedIn(this)) {
+            btnLogout.setVisibility(View.VISIBLE);
+        } else {
+            btnLogout.setVisibility(View.GONE);
+        }
+
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -146,76 +157,97 @@ public class ProductListActivity extends AppCompatActivity {
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     productList = response.body();
-                    productAdapter = new ProductAdapter(ProductListActivity.this,productList, 1);
+                    productAdapter = new ProductAdapter(productList);
                     recyclerView.setAdapter(productAdapter);
                 } else {
-                    Log.e("API_ERROR", "Response Code: " + response.code());
+                    Toast.makeText(ProductListActivity.this, "Failed to fetch products", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                Log.e("API_ERROR", t.getMessage());
+                Toast.makeText(ProductListActivity.this, "Failed to fetch products: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void performSearch(String query) {
-        if (!TextUtils.isEmpty(query)) {
-            List<Product> filteredList = new ArrayList<>();
-            String[] keywords = query.toLowerCase().split("\\s+"); // Tách từ khóa tìm kiếm thành mảng từ
-
-            for (Product product : productList) {
-                String productName = product.getProductName().toLowerCase();
-                boolean found = true;
-
-                // Kiểm tra từng từ khóa trong query xem có trong tên sản phẩm không
-                for (String keyword : keywords) {
-                    if (!productName.contains(keyword)) {
-                        found = false;
-                        break;
-                    }
-                }
-
-                if (found) {
-                    filteredList.add(product);
-                }
-            }
-
-            if (filteredList.isEmpty()) {
-                Toast.makeText(this, "No products found for: " + query, Toast.LENGTH_SHORT).show();
-            } else {
-                productAdapter.updateProductList(filteredList);
-            }
-        } else {
+        if (TextUtils.isEmpty(query)) {
             Toast.makeText(this, "Please enter a search query", Toast.LENGTH_SHORT).show();
+            return;
         }
-    }
 
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+        ProductAPI apiService = retrofit.create(ProductAPI.class);
+
+        Call<List<Product>> call = apiService.getAllProducts();
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    productList = response.body();
+                    productAdapter.updateProductList(productList);
+                } else {
+                    Toast.makeText(ProductListActivity.this, "No products found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(ProductListActivity.this, "Search failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                Log.e("MenuManage", "Activity");
-
-                if (id == R.id.product) {
-                    startActivity(new Intent(ProductListActivity.this, ManageProductActivity.class));
-                    finish();
+                int itemId = item.getItemId();
+                if (itemId == R.id.product) {
+                    Intent homeIntent = new Intent(ProductListActivity.this, ManageProductActivity.class);
+                    startActivity(homeIntent);
                     return true;
-                } else if (id == R.id.account) {
-                    startActivity(new Intent(ProductListActivity.this, ManageAccountActivity.class));
-                    finish();
+                } else if (itemId == R.id.account) {
+                    Intent accountIntent = new Intent(ProductListActivity.this, ManageAccountActivity.class);
+                    startActivity(accountIntent);
                     return true;
-                } else if (id == R.id.payment) {
-                    startActivity(new Intent(ProductListActivity.this, ManagePaymentActivity.class));
-                    finish();
+                } else if (itemId == R.id.payment) {
+                    if (isLoggedIn(ProductListActivity.this)) {
+                        Intent cartIntent = new Intent(ProductListActivity.this, ManagePaymentActivity.class);
+                        startActivity(cartIntent);
+                    } else {
+                        Intent loginIntent = new Intent(ProductListActivity.this, LoginActivity.class);
+                        loginIntent.putExtra("redirectTo", "cart");
+                        startActivity(loginIntent);
+                    }
                     return true;
-                } else {
-                    return false;
                 }
+//                else if (itemId == R.id.action_orders) {
+//                    // Handle orders action
+//                    return true;
+//                }
+                return false;
             }
         });
+    }
+
+    private boolean isLoggedIn(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isLoggedIn", false);
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggedIn", false);
+        editor.remove("userId");
+        editor.apply();
+
+        Toast.makeText(ProductListActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+        Intent loginIntent = new Intent(ProductListActivity.this, ProductListActivity.class);
+        startActivity(loginIntent);
+        finish();
     }
 }

@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\hoc_tap\Ki_8\prm392\FinalProjectPRM392_G5\ShirtSalesApp\app\src\main\shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\hoc_tap\Ki_8\prm392\FinalProjectPRM392_G5\ShirtSalesApp\app\src\debug\shaders"/></dataSet></merger>

@@ -45,6 +45,10 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.cartManager = new CartManager(context);
     }
 
+    public ProductAdapter(List<Product> productList) {
+        this.productList = productList;
+    }
+
     @Override
     public int getItemViewType(int position) {
         return viewType;

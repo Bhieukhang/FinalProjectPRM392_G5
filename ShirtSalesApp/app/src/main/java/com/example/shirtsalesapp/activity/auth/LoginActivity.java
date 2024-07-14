@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.activity.cart.CartActivity;
 import com.example.shirtsalesapp.activity.cart.CartManager;
+import com.example.shirtsalesapp.activity.product.ProducDetailActivity;
 import com.example.shirtsalesapp.activity.product.ProductListActivity;
 import com.example.shirtsalesapp.model.ApiClient;
 import com.example.shirtsalesapp.model.User;
@@ -77,43 +79,61 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     User user = response.body();
                     if (user != null) {
-                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
-                        // Lưu trạng thái đăng nhập vào SharedPreferences
-                        saveLoginState(true);
+                        saveLoginState(true, user.getId());
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 
-                        // Handle successful login
-                        if (product != null) {
-                            addToCartAfterLogin(user.getId(), product);
+                        // Kiểm tra xem người dùng được chuyển hướng từ đâu
+                        Intent intent = getIntent();
+                        if (intent != null && intent.hasExtra("redirectTo")) {
+                            String redirectTo = intent.getStringExtra("redirectTo");
+                            if ("cart".equals(redirectTo)) {
+                                Intent cartIntent = new Intent(LoginActivity.this, CartActivity.class);
+                                startActivity(cartIntent);
+                            } else if (product != null) {
+                                addToCartAfterLogin(user.getId(), product);
+                            } else {
+                                Intent productListIntent = new Intent(LoginActivity.this, ProductListActivity.class);
+                                startActivity(productListIntent);
+                            }
+                        } else {
+                            Intent productListIntent = new Intent(LoginActivity.this, ProductListActivity.class);
+                            startActivity(productListIntent);
                         }
-                        Intent intent = new Intent(LoginActivity.this, ProductListActivity.class);
-                        startActivity(intent);
                         finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại. Hãy thử lại!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login failed: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Login failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void saveLoginState(boolean isLoggedIn, int userId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggedIn", isLoggedIn);
+        editor.putInt("userId", userId);
+        editor.apply();
     }
 
     private void addToCartAfterLogin(int userId, Product product) {
         CartManager cartManager = new CartManager(this);
         Cart cart = cartManager.loadCart();
-        if (cart == null) {
+        if (cart == null || cart.getStatus() == 0) {
             cart = new Cart();
             cart.setUserId(userId);
         }
-
         boolean check = true;
         for (CartProduct c : cart.getProducts()) {
             if (c.getProductId() == product.getId()) {
                 c.setQuantity(c.getQuantity() + 1);
-                Toast.makeText(this, "Duplicated item +1 Quantity", Toast.LENGTH_SHORT).show();
                 check = false;
             }
         }
@@ -126,12 +146,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         cartManager.saveCart(cart);
         Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
-    }
 
-    private void saveLoginState(boolean isLoggedIn) {
-        SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("isLoggedIn", isLoggedIn);
-        editor.apply();
+        Intent productDetailIntent = new Intent(LoginActivity.this, ProducDetailActivity.class);
+        productDetailIntent.putExtra("productItem", product);
+        startActivity(productDetailIntent);
+        finish();
     }
 }
+
