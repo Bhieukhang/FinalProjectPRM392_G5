@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.shirtsalesapp.R;
 import com.example.shirtsalesapp.activity.cart.CartActivity;
 import com.example.shirtsalesapp.activity.cart.CartManager;
+import com.example.shirtsalesapp.activity.manager.ManageProductActivity;
 import com.example.shirtsalesapp.activity.product.ProducDetailActivity;
 import com.example.shirtsalesapp.activity.product.ProductListActivity;
 import com.example.shirtsalesapp.model.ApiClient;
@@ -70,6 +71,15 @@ public class LoginActivity extends AppCompatActivity {
     private void login() {
         String userName = userNameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+
+        // Kiểm tra tài khoản manager cứng
+        if ("manager".equals(userName) && "123456".equals(password)) {
+            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+            Intent manageProductIntent = new Intent(LoginActivity.this, ManageProductActivity.class);
+            startActivity(manageProductIntent);
+            finish();
+            return;
+        }
 
         Call<User> call = userService.login(userName, password);
 
@@ -153,4 +163,3 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 }
-

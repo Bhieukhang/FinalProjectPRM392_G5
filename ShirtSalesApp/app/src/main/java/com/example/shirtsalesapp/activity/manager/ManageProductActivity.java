@@ -7,14 +7,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.shirtsalesapp.R;
+import com.example.shirtsalesapp.activity.auth.LoginActivity;
 import com.example.shirtsalesapp.activity.product.ProductAdapter;
 import com.example.shirtsalesapp.api.ProductAPI;
 import com.example.shirtsalesapp.model.Product;
@@ -33,6 +39,8 @@ public class ManageProductActivity extends AppCompatActivity {
     private EditText editTextAmountProduct;
     private RecyclerView rvListProduct;
     private ProductAdapter productAdapter;
+    private Button btnLogout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +48,7 @@ public class ManageProductActivity extends AppCompatActivity {
 
         editTextAmountProduct = findViewById(R.id.editTextAmountProduct);
         rvListProduct = findViewById(R.id.rvListProduct);
+        btnLogout = findViewById(R.id.btn_logout);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         setupBottomNavigation(bottomNavigationView);
@@ -48,7 +57,7 @@ public class ManageProductActivity extends AppCompatActivity {
         ProductAPI apiService = retrofit.create(ProductAPI.class);
         Call<Integer> call = apiService.getCountProduct(1);
 
-        //Call count product
+        // Call count product
         call.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -67,19 +76,26 @@ public class ManageProductActivity extends AppCompatActivity {
             }
         });
 
-        //Load list product item
+        // Load list product item
         rvListProduct.setLayoutManager(new GridLayoutManager(this, 1));
 
         ProductService.fetchAllProducts(new ProductService.ProductApiCallback() {
             @Override
             public void onSuccess(List<Product> productList) {
-                productAdapter = new ProductAdapter(ManageProductActivity.this,productList, 2);
+                productAdapter = new ProductAdapter(ManageProductActivity.this, productList, 2);
                 rvListProduct.setAdapter(productAdapter);
             }
 
             @Override
             public void onError(String errorMessage) {
                 Log.e("API_ERROR", errorMessage);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
             }
         });
     }
@@ -99,14 +115,24 @@ public class ManageProductActivity extends AppCompatActivity {
                     startActivity(new Intent(ManageProductActivity.this, ManageAccountActivity.class));
                     finish();
                     return true;
-                } else if (id == R.id.payment) {
-                    startActivity(new Intent(ManageProductActivity.this, ManagePaymentActivity.class));
-                    finish();
-                    return true;
                 } else {
                     return false;
                 }
             }
         });
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isLoggedIn", false);
+        editor.remove("userId");
+        editor.apply();
+
+        Toast.makeText(ManageProductActivity.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+        Intent loginIntent = new Intent(ManageProductActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
+        finish();
     }
 }

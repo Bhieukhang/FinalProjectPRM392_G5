@@ -36,11 +36,7 @@ public class ManagePaymentActivity extends AppCompatActivity {
                     startActivity(new Intent(ManagePaymentActivity.this, ManageAccountActivity.class));
                     finish();
                     return true;
-                } else if (id == R.id.payment) {
-                    startActivity(new Intent(ManagePaymentActivity.this, ManagePaymentActivity.class));
-                    finish();
-                    return true;
-                } else {
+                }  else {
                     return false;
                 }
             }
