@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <!-- Logo or App Title -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:text="Shirt Sales"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginTop="40dp"/>
+
+    <!-- Username EditText -->
+    <EditText
+        android:id="@+id/userNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appTitle"
+        android:layout_marginTop="16dp"
+        android:hint="Tên đăng nhập"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_user"
+        android:textColor="#333333"
+        android:textSize="16sp"/>
+
+    <!-- Password EditText -->
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userNameEditText"
+        android:layout_marginTop="16dp"
+        android:hint="Mật khẩu"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        android:drawableLeft="@drawable/ic_lock"
+        android:textColor="#333333"
+        android:textSize="16sp"/>
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordEditText"
+        android:layout_marginTop="24dp"
+        android:text="Đăng nhập"
+        android:background="@drawable/button_background"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:padding="16dp"/>
+
+    <!-- Register Redirect Button -->
+    <Button
+        android:id="@+id/registerRedirectButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginButton"
+        android:layout_marginTop="16dp"
+        android:text="Chưa có tài khoản? Đăng ký"
+        android:background="@drawable/button_background_secondary"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:padding="16dp"/>
+</RelativeLayout>
